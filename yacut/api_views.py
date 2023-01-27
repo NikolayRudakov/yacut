@@ -29,10 +29,10 @@ def add_url():
         raise InvalidAPIUsage("Указано недопустимое имя для короткой ссылки")
     if not re.fullmatch(r"[a-zA-Z0-9]+", data["custom_id"]):
         raise InvalidAPIUsage("Указано недопустимое имя для короткой ссылки")
-    if URLMap.query.filter_by(short=data["custom_id"]).first() is not None:
+    if not (URLMap.query.filter_by(short=data["custom_id"]).first() is None):
         short_link = data["custom_id"]
         raise InvalidAPIUsage(f'Имя "{short_link}" уже занято.')
-    if URLMap.query.filter_by(original=data["url"]).first() is not None:
+    if not (URLMap.query.filter_by(original=data["url"]).first() is None):
         raise InvalidAPIUsage("Такая ссылка уже есть в базе данных!")
     urlmap = URLMap()
     urlmap.from_dict(data)
