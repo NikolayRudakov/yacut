@@ -21,4 +21,3 @@ class URLMap(db.Model):
         setattr(self, 'original', data['url'])
         if 'custom_id' in data:
             setattr(self, 'short', data['custom_id'])
-
