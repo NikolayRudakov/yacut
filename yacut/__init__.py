@@ -4,9 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 from settings import Config
 
 app = Flask(__name__)
-app.config.from_object(Config)
+# app.config.from_object(Config)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
-app.config['SECRET_KEY'] = 'MY_SECRET_KEY'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = '1234test4321'
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
