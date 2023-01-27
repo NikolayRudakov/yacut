@@ -21,7 +21,7 @@ def add_url():
         raise InvalidAPIUsage("Отсутствует тело запроса")
     if "url" not in data:
         raise InvalidAPIUsage('"url" является обязательным полем!')
-    if "custom_id" not in data or data["custom_id"] == None:
+    if "custom_id" not in data or data["custom_id"] is None:
         data["custom_id"] = get_unique_short_id(6)
     if len(data["custom_id"]) < 1:
         data["custom_id"] = get_unique_short_id(6)
@@ -29,10 +29,10 @@ def add_url():
         raise InvalidAPIUsage("Указано недопустимое имя для короткой ссылки")
     if not re.fullmatch(r"[a-zA-Z0-9]+", data["custom_id"]):
         raise InvalidAPIUsage("Указано недопустимое имя для короткой ссылки")
-    if not (URLMap.query.filter_by(short=data["custom_id"]).first() is None):
+    if URLMap.query.filter_by(short=data["custom_id"]).first() is not None:
         short_link = data["custom_id"]
         raise InvalidAPIUsage(f'Имя "{short_link}" уже занято.')
-    if not (URLMap.query.filter_by(original=data["url"]).first() is None):
+    if URLMap.query.filter_by(original=data["url"]).first() is not None:
         raise InvalidAPIUsage("Такая ссылка уже есть в базе данных!")
     urlmap = URLMap()
     urlmap.from_dict(data)
