@@ -1,8 +1,5 @@
 import re
-
 from flask import jsonify, request, url_for
-from random import randrange
-
 from . import app, db
 from .models import URLMap
 from .views import get_unique_short_id

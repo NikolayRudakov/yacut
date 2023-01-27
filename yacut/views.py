@@ -1,6 +1,6 @@
 from random import sample
 import string
-from flask import abort, flash, redirect, render_template, url_for
+from flask import abort, redirect, render_template, url_for
 
 from . import app, db
 from .forms import URLForm
@@ -51,9 +51,9 @@ def add_link_view():
         urls = URLMap(original=original, short=short)
 
         if URLMap.query.filter_by(original=original).first():
-            show_url = (
-                url_for("add_link_view", _external=True)
-                + URLMap.query.filter_by(original=original).first().short
+            show_url = url_for("add_link_view", _external=True)
+            show_url = show_url + URLMap.query.filter_by(
+                original=original.first().short
             )
             return render_template(
                 "make_url.html",
