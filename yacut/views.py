@@ -1,27 +1,12 @@
-from random import sample
 import string
-from flask import abort, redirect, render_template, url_for
 
+from flask import redirect, render_template, url_for
+from random import sample
+
+from . import constants as c
 from . import app, db
 from .forms import URLForm
 from .models import URLMap
-
-"""
-def random_opinion():
-    quantity = Opinion.query.count()
-    if quantity:
-        offset_value = randrange(quantity)
-        opinion = Opinion.query.offset(offset_value).first()
-        return opinion
-
-
-@app.route('/')
-def index_view():
-    opinion = random_opinion()
-    if opinion is not None:
-        return render_template('opinion.html', opinion=opinion)
-    abort(404)
-"""
 
 
 def get_unique_short_id(length):
@@ -47,7 +32,7 @@ def add_link_view():
                     "make_url.html", form=form, mess=f"Имя {short} уже занято!"
                 )
         else:
-            short = get_unique_short_id(6)
+            short = get_unique_short_id(c.AUTO_LINK_SIZE)
         urls = URLMap(original=original, short=short)
 
         if URLMap.query.filter_by(original=original).first():
@@ -76,7 +61,6 @@ def add_link_view():
 
 @app.route("/<id>")
 def url_redirect(id):
-    get_url = URLMap.query.filter_by(short=id).first()
-    if get_url:
-        return redirect(get_url.original)
-    abort(404)
+    get_url = URLMap.query.filter_by(short=id).first_or_404()
+    return redirect(get_url.original)
+
