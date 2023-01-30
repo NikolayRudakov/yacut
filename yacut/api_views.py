@@ -45,4 +45,3 @@ def add_url():
     short_link = url_for("add_link_view", _external=True) + urlmap.short
 
     return jsonify({"short_link": short_link, "url": urlmap.original}), st.CREATED
-
