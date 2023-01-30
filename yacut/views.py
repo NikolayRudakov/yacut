@@ -63,4 +63,3 @@ def add_link_view():
 def url_redirect(id):
     get_url = URLMap.query.filter_by(short=id).first_or_404()
     return redirect(get_url.original)
-

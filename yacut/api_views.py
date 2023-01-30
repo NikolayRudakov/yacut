@@ -46,4 +46,3 @@ def add_url():
 
     return jsonify({"short_link": short_link, "url": urlmap.original}), st.CREATED
 
-
